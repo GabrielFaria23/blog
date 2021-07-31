@@ -1,4 +1,4 @@
-package com.framework.blog.config;
+package com.framework.blog.swagger.config;
 
 import com.google.common.base.Predicate;
 import org.springframework.context.annotation.Bean;

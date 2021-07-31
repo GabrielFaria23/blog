@@ -1,24 +1,29 @@
 package com.framework.blog.service;
 
-import com.framework.blog.exception.UserBlogLoginNotExist;
+import com.framework.blog.exception.UserBlogUsernameNotExist;
 import com.framework.blog.exception.UserBlogNotExist;
 import com.framework.blog.model.UserBlog;
 import com.framework.blog.repository.UserBlogRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserBlogService {
 
-    private final UserBlogRepository userBlogRepository;
+    @Autowired
+    private UserBlogRepository userBlogRepository;
 
-    public UserBlogService(UserBlogRepository userBlogRepository) {
-        this.userBlogRepository = userBlogRepository;
-    }
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     public UserBlog createUserBlog(UserBlog userBlog){
-        return userBlogRepository.save(userBlog);
+        return userDetailsService.signUpUserBlog(userBlog);
     }
 
     public void deleteUserBlog(Long id) throws UserBlogNotExist {
@@ -43,14 +48,8 @@ public class UserBlogService {
         return userBlogRepository.findAll(pageable);
     }
 
-    public UserBlog findByLogin(String login) throws UserBlogLoginNotExist {
-        return checkUserLoginExist(login);
-    }
-
-    private UserBlog checkUserLoginExist(String login) throws UserBlogLoginNotExist {
-        return userBlogRepository.findByLogin(login)
-                .orElseThrow(() -> new UserBlogLoginNotExist("Cannot find user with login: "+ login +" /n" +
-                        "Please insert another login and try again!"));
+    public Optional<UserBlog> findByUsername(String username) {
+        return userBlogRepository.findByUsername(username);
     }
 
     private UserBlog checkUserIdExist(Long id) throws UserBlogNotExist {

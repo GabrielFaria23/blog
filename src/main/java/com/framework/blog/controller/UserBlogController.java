@@ -5,6 +5,7 @@ import com.framework.blog.model.UserBlog;
 import com.framework.blog.service.UserBlogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -14,15 +15,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Api(value = "Endpoint of UserBlogs", description = "Endpoint used to make alterations in userBlog Entity", tags = "Endpoint of UserBlog")
+@AllArgsConstructor
 @RestController
 @RequestMapping(value = "/v1/usersBlog")
 public class UserBlogController {
 
     private final UserBlogService userBlogService;
-
-    public UserBlogController(UserBlogService userBlogService) {
-        this.userBlogService = userBlogService;
-    }
 
     @ApiOperation(value = "Create UserBlog")
     @PostMapping
