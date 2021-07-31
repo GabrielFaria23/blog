@@ -1,29 +1,29 @@
 package com.framework.blog.service;
 
-import com.framework.blog.exception.UserBlogUsernameNotExist;
 import com.framework.blog.exception.UserBlogNotExist;
 import com.framework.blog.model.UserBlog;
 import com.framework.blog.repository.UserBlogRepository;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
-public class UserBlogService {
+public class UserBlogService{
 
     @Autowired
     private UserBlogRepository userBlogRepository;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserBlogService userBlogService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UserBlog createUserBlog(UserBlog userBlog){
-        return userDetailsService.signUpUserBlog(userBlog);
+        userBlog.setPassword(passwordEncoder.encode(userBlog.getPassword()));
+        return userBlogService.createUserBlog(userBlog);
     }
 
     public void deleteUserBlog(Long id) throws UserBlogNotExist {
@@ -46,10 +46,6 @@ public class UserBlogService {
 
     public Page<UserBlog> findAllUsers(Pageable pageable){
         return userBlogRepository.findAll(pageable);
-    }
-
-    public Optional<UserBlog> findByUsername(String username) {
-        return userBlogRepository.findByUsername(username);
     }
 
     private UserBlog checkUserIdExist(Long id) throws UserBlogNotExist {

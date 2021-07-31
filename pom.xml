@@ -76,8 +76,13 @@
 			<artifactId>flyway-core</artifactId>
 			<version>7.12.0</version>
 		</dependency>
-	</dependencies>
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>3.18.1</version>
+		</dependency>
 
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
