@@ -1,5 +1,6 @@
 package com.framework.blog.service;
 
+import com.framework.blog.exception.UserBlogLoginNotExist;
 import com.framework.blog.exception.UserBlogNotExist;
 import com.framework.blog.model.UserBlog;
 import com.framework.blog.repository.UserBlogRepository;
@@ -42,9 +43,20 @@ public class UserBlogService {
         return userBlogRepository.findAll(pageable);
     }
 
+    public UserBlog findByLogin(String login) throws UserBlogLoginNotExist {
+        return checkUserLoginExist(login);
+    }
+
+    private UserBlog checkUserLoginExist(String login) throws UserBlogLoginNotExist {
+        return userBlogRepository.findByLogin(login)
+                .orElseThrow(() -> new UserBlogLoginNotExist("Cannot find user with login: "+ login +" /n" +
+                        "Please insert another login and try again!"));
+    }
+
     private UserBlog checkUserIdExist(Long id) throws UserBlogNotExist {
         return userBlogRepository.findById(id)
                 .orElseThrow(() -> new UserBlogNotExist("Cannot find user with id: "+ id +" /n" +
                         "Please insert another id and try again!"));
     }
+
 }

@@ -22,10 +22,15 @@ public class UserBlog {
     private String name;
 
     @NotNull
+    @Column(unique = true)
+    private String login;
+
+    @NotNull
     private String password;
 
     @CPF
     @NotNull
+    @Column(unique = true)
     private String cpf;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userBlog")

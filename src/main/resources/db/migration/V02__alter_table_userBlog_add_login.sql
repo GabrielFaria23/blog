@@ -1,0 +1,1 @@
+ALTER TABLE user_blog ADD login VARCHAR(50);
