@@ -48,10 +48,4 @@ public class AlbumController {
     public ResponseEntity<Album> findById(@PathVariable long id) throws AlbumNotExist {
         return ResponseEntity.ok(albumService.findById(id));
     }
-
-    @ApiOperation(value = "Update Album")
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<Album> updateAlbum(@PathVariable long id, @RequestBody @Valid Album album) throws AlbumNotExist {
-        return ResponseEntity.ok(albumService.updateAlbum(id, album));
-    }
 }

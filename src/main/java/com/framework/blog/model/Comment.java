@@ -19,7 +19,12 @@ public class Comment {
     @NotNull
     private String comment;
 
-    @ManyToOne()
+    @ManyToOne
+    @JoinColumn(name = "post_id", referencedColumnName = "id", nullable = false)
+    private Post post;
+
+    @ManyToOne
     @JoinColumn(name = "user_blog_id", referencedColumnName = "id", nullable = false)
     private UserBlog userBlog;
+
 }

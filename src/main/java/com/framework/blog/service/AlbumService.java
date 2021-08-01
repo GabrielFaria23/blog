@@ -18,7 +18,7 @@ public class AlbumService {
         this.albumRepository = albumRepository;
     }
 
-    public Album createAlbum(@Valid Album album){
+    public Album createAlbum(Album album){
         return albumRepository.save(album);
     }
 
@@ -28,14 +28,6 @@ public class AlbumService {
 
     public Album findById(Long id) throws AlbumNotExist {
         return checkAlbumExist(id);
-    }
-
-    public Album updateAlbum(Long id, Album album) throws AlbumNotExist {
-        Album albumToBeUpdated = checkAlbumExist(id);
-
-        //verificar campos
-
-        return albumRepository.save(albumToBeUpdated);
     }
 
     public Page<Album> findAllAlbums(Pageable pageable){

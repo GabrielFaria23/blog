@@ -18,9 +18,8 @@ public class Album {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Image> image;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "album")
+    private List<Photo> photos;
 
     @ManyToOne()
     @JoinColumn(name = "user_blog_id", referencedColumnName = "id", nullable = false)

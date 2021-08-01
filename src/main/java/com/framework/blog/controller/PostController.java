@@ -1,5 +1,6 @@
 package com.framework.blog.controller;
 
+import com.framework.blog.exception.PermissionDeniedException;
 import com.framework.blog.exception.PostNotExist;
 import com.framework.blog.model.Post;
 import com.framework.blog.service.PostService;
@@ -10,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,7 +34,7 @@ public class PostController {
     @ApiOperation(value = "Delete Post")
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePost(@PathVariable long id) throws PostNotExist {
+    public void deletePost(@PathVariable long id) throws PostNotExist, PermissionDeniedException {
         postService.deletePost(id);
     }
 
@@ -49,7 +52,7 @@ public class PostController {
 
     @ApiOperation(value = "Update Post")
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Post> updatePost(@PathVariable long id, @RequestBody @Valid Post post) throws PostNotExist {
-        return ResponseEntity.ok(postService.updatePost(id, post));
+    public ResponseEntity<Post> updatePost(@PathVariable long id, @RequestBody @Valid Post post, @AuthenticationPrincipal UserDetails userDetails) throws PostNotExist {
+        return ResponseEntity.ok(postService.updatePost(id, post, userDetails));
     }
 }

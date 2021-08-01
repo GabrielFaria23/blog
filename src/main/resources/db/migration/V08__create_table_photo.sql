@@ -1,0 +1,6 @@
+CREATE TABLE photo(
+    id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+    photo_path VARCHAR(255) NOT NULL,
+    album_id BIGINT(20),
+    FOREIGN KEY (album_id) REFERENCES album(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

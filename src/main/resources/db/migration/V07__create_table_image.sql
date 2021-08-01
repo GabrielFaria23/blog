@@ -1,0 +1,6 @@
+CREATE TABLE image(
+    id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+    image_path VARCHAR(255) NOT NULL,
+    post_id BIGINT(20),
+    FOREIGN KEY (post_id) REFERENCES post(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

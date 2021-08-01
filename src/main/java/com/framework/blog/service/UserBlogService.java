@@ -9,8 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
-
 @Service
 public class UserBlogService{
 
@@ -18,14 +16,11 @@ public class UserBlogService{
     private UserBlogRepository userBlogRepository;
 
     @Autowired
-    private UserBlogService userBlogService;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public UserBlog createUserBlog(@Valid UserBlog userBlog){
+    public UserBlog createUserBlog(UserBlog userBlog){
         userBlog.setPassword(passwordEncoder.encode(userBlog.getPassword()));
-        return userBlogService.createUserBlog(userBlog);
+        return userBlogRepository.save(userBlog);
     }
 
     public void deleteUserBlog(Long id) throws UserBlogNotExist {
