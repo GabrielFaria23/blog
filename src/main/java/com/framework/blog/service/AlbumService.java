@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
+
 @Service
 public class AlbumService {
 
@@ -16,7 +18,7 @@ public class AlbumService {
         this.albumRepository = albumRepository;
     }
 
-    public Album createAlbum(Album album){
+    public Album createAlbum(@Valid Album album){
         return albumRepository.save(album);
     }
 

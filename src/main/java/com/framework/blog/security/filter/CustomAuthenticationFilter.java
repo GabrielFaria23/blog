@@ -51,6 +51,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .withIssuer(request.getRequestURL().toString())
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
+        response.setHeader("access_token", "Bearer "+token);
         Map<String, String> accessToken = new HashMap<>();
         accessToken.put("access_token","Bearer "+token);
         response.setContentType(APPLICATION_JSON_VALUE);

@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
+
 @Service
 public class PostService {
 
@@ -16,7 +18,7 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    public Post createPost(Post post){
+    public Post createPost(@Valid Post post){
         return postRepository.save(post);
     }
 

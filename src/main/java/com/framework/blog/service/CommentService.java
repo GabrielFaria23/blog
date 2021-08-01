@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
+
 @Service
 public class CommentService {
 
@@ -16,7 +18,7 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
-    public Comment createComment(Comment comment){
+    public Comment createComment(@Valid Comment comment){
         return commentRepository.save(comment);
     }
 

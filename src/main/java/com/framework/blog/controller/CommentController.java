@@ -1,11 +1,8 @@
 package com.framework.blog.controller;
 
 import com.framework.blog.exception.CommentNotExist;
-import com.framework.blog.exception.PostNotExist;
 import com.framework.blog.model.Comment;
-import com.framework.blog.model.Post;
 import com.framework.blog.service.CommentService;
-import com.framework.blog.service.PostService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;

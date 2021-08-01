@@ -19,7 +19,7 @@ public class Comment {
     @NotNull
     private String comment;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "user_blog_id", referencedColumnName = "id", nullable = false)
     private UserBlog userBlog;
 }

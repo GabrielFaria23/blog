@@ -5,6 +5,7 @@ import com.framework.blog.model.Post;
 import com.framework.blog.service.PostService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -18,11 +19,8 @@ import javax.validation.Valid;
 @RequestMapping(value = "/v1/posts")
 public class PostController {
 
-    private final PostService postService;
-
-    public PostController(PostService postService) {
-        this.postService = postService;
-    }
+    @Autowired
+    private PostService postService;
 
     @ApiOperation(value = "Create Post")
     @PostMapping

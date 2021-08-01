@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
+
 @Service
 public class UserBlogService{
 
@@ -21,7 +23,7 @@ public class UserBlogService{
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public UserBlog createUserBlog(UserBlog userBlog){
+    public UserBlog createUserBlog(@Valid UserBlog userBlog){
         userBlog.setPassword(passwordEncoder.encode(userBlog.getPassword()));
         return userBlogService.createUserBlog(userBlog);
     }

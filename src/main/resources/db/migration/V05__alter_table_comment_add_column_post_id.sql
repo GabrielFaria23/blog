@@ -1,0 +1,2 @@
+ALTER TABLE comment ADD post_id BIGINT(20) NOT NULL;
+ALTER TABLE comment ADD FOREIGN KEY (post_id) REFERENCES post(id);

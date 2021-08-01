@@ -1,10 +1,12 @@
 package com.framework.blog.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -16,7 +18,11 @@ public class Album {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Image> image;
+
+    @ManyToOne()
     @JoinColumn(name = "user_blog_id", referencedColumnName = "id", nullable = false)
     private UserBlog userBlog;
 }
