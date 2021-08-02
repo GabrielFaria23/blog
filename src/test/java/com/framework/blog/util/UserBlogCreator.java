@@ -1,8 +1,8 @@
-package com.framework.blog.repository.util;
+package com.framework.blog.util;
 
 import com.framework.blog.model.UserBlog;
 
-public class AlbumCreator {
+public class UserBlogCreator {
 
     public static UserBlog createUserBlogToBeSaved(){
         return UserBlog.builder()
@@ -13,9 +13,9 @@ public class AlbumCreator {
                 .build();
     }
 
-    public static UserBlog   createValidUserBlog(){
+    public static UserBlog createValidUserBlog(){
         return UserBlog.builder()
-                .id(5L)
+                .id(1L)
                 .name("Gabriel")
                 .username("gabriel")
                 .password("123")
@@ -23,9 +23,9 @@ public class AlbumCreator {
                 .build();
     }
 
-    public static UserBlog   createValidUpdateUserBlog(){
+    public static UserBlog createValidUpdateUserBlog(){
         return UserBlog.builder()
-                .id(5L)
+                .id(1L)
                 .name("Gabriel Faria")
                 .username("gabriel faria")
                 .password("123")

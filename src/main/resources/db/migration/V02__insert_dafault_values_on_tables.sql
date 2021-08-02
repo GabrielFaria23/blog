@@ -31,3 +31,11 @@ INSERT INTO comment (id, comment, user_blog_id, post_id) VALUES
 INSERT INTO comment (id, comment, user_blog_id, post_id) VALUES
     (null, "Bora ver se ele vai realmente ajudar os programadores!", 3, 1);
 
+INSERT INTO album (id, user_blog_id) VALUES
+    (null, 1);
+
+INSERT INTO album (id, user_blog_id) VALUES
+    (null, 2);
+
+INSERT INTO album (id, user_blog_id) VALUES
+    (null, 3);

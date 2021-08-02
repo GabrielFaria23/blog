@@ -2,7 +2,11 @@ CREATE TABLE user_blog(
     id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
     cpf VARCHAR(11) NOT NULL,
-    password VARCHAR(50) NOT NULL
+    password LONGTEXT NOT NULL,
+    username VARCHAR(100) NOT NULL,
+    user_blog_role ENUM('USER','ADMIN') ,
+    locked BOOLEAN NOT NULL DEFAULT false,
+    enabled BOOLEAN NOT NULL DEFAULT true
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE post(
@@ -17,6 +21,8 @@ CREATE TABLE comment(
     id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
     comment VARCHAR(200) NOT NULL,
     user_blog_id BIGINT(20) NOT NULL,
+    post_id BIGINT(20) NOT NULL,
+    FOREIGN KEY (post_id) REFERENCES post(id),
     FOREIGN KEY (user_blog_id) REFERENCES user_blog(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
