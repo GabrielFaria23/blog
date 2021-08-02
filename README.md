@@ -31,16 +31,6 @@ Depois de cadastrar o Usuário é possível realizar seguintes requisições:
 2. (GET) Recuperar todos os usuários: http://localhost:8080/v1/usersBlog/ 
 
 
-> **Note:** EX:{
-              "id": {id},
-              "name": "Felipe Silva",
-              "username": "felipe",
-              "password": "321",
-              "cpf": "95542836011",
-              "userBlogRole": "USER"
-          }
-
-
 Depois de criar o usuário o proximo passo é fazer o login para ter acesso a algumas funcionalidades restritas. Para fazer o login faça uma requisição post para a url: http://localhost:8080/v1/login
 
 ![Login](https://user-images.githubusercontent.com/47676471/127918646-a233b8a0-b622-45d6-9377-794813b3aadc.png)
