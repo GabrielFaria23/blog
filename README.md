@@ -72,7 +72,9 @@ Obs: Usuario logado vai comentar no post 2
 
 Caso o criador do comentario queira deletar seu comentario basta enviar uma requisição DELETE para a url: http://localhost:8080/v1/comments/{idComment} .
 
-Também é possível cadastrar imagens no Post : (POST) http://localhost:8080/v1/images/{idPost}/upload
+Também é possível cadastrar imagens no Post : (POST) http://localhost:8080/v1/images/{idPost}/upload 
+
+#### Note que para inserir imagens o header da requisição não pode ter content-type
 
 ![imagePost](https://user-images.githubusercontent.com/47676471/127919175-44cb40dd-027e-4a2d-9484-f9c1342cc9ba.png)
 
@@ -80,6 +82,7 @@ Para finalizar, qualquer usuário também pode cadastrar seu próprio álbum de 
 >Essa requisição não precisa de body.
 
 Para inserir Fotos dentro do álbum o dono do mesmo deve  enviar uma requisição (POST) para http://localhost:8080/v1/photos/{idAlbum}/upload da seguinte maneira: 
+#### Note que para inserir fotos, assim como nas imagens, o header da requisição não pode ter content-type
 
 ![post photo](https://user-images.githubusercontent.com/47676471/127919201-f5bd8dd1-3d1f-43d8-b060-8fc202442404.png)
 
