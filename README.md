@@ -55,7 +55,7 @@ com isso o sistema permite o cadastro de posts utilizando o caminho: http://loca
 }
 
 Utilizando a mesma URL porém fazendo uma requisição do tipo GET será retornado todos os posts publicados.
-É possível deletar um post, caso ele seja do usuário logado, fazendo uma requisição DELETE para a url: http://localhost:8080/v1/posts/{idPost}.
+É possível deletar um post, caso ele seja do usuário logado, fazendo uma requisição DELETE para a url: http://localhost:8080/v1/posts/{idPost}
 
 Qualquer usuário pode comentar em qualquer post enviando um POST na url: http://localhost:8080/v1/comments e passando o corpo da requisição com a seguir:
 
