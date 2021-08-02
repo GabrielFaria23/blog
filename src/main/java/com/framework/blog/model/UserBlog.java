@@ -2,9 +2,11 @@ package com.framework.blog.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.hateoas.RepresentationModel;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,8 +19,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
+@Builder
 @Table(name = "user_blog")
-public class UserBlog implements UserDetails {
+public class UserBlog extends RepresentationModel<UserBlog> implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +42,6 @@ public class UserBlog implements UserDetails {
     @Column(unique = true)
     private String cpf;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "user_blog_role")
     private UserBlogRole userBlogRole;
@@ -62,12 +64,36 @@ public class UserBlog implements UserDetails {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userBlog")
     private List<Comment> comments;
 
+    public UserBlog(long id, String name, String username, String password, String cpf, UserBlogRole userBlogRole, List<Post> posts, List<Album> albums, List<Comment> comments) {
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.cpf = cpf;
+        this.userBlogRole = userBlogRole;
+        this.posts = posts;
+        this.albums = albums;
+        this.comments = comments;
+    }
+
+    public UserBlog(long id, String name, String username, String password, String cpf, UserBlogRole userBlogRole) {
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.cpf = cpf;
+    }
+
     public UserBlog(String name, String username, String password, String cpf, UserBlogRole userBlogRole) {
         this.name = name;
         this.username = username;
         this.password = password;
         this.cpf = cpf;
         this.userBlogRole = userBlogRole;
+    }
+
+    public UserBlog(long id) {
+        this.id = id;
     }
 
     @Override

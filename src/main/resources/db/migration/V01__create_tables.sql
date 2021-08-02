@@ -8,7 +8,6 @@ CREATE TABLE user_blog(
 CREATE TABLE post(
     id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
     description VARCHAR(200) NOT NULL,
-    image VARCHAR(200) NOT NULL,
     link VARCHAR(200) NOT NULL,
     user_blog_id BIGINT(20) NOT NULL,
     FOREIGN KEY (user_blog_id) REFERENCES user_blog(id)

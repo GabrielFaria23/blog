@@ -14,31 +14,32 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class PostService {
 
     private final PostRepository postRepository;
-    private final UserBlogRepository userBlogRepository;
+    private final UserBlogService userBlogService;
 
-    public PostService(PostRepository postRepository, UserBlogRepository userBlogRepository) {
+    public PostService(PostRepository postRepository, UserBlogService userBlogService) {
         this.postRepository = postRepository;
-        this.userBlogRepository = userBlogRepository;
+        this.userBlogService = userBlogService;
     }
 
-    public Post createPost(Post post){
+    public Post createPost(Post post) {
+        UserBlog userBlog = userBlogService.userLogged();
+        post.setUserBlog(userBlog);
         return postRepository.save(post);
     }
 
     public void deletePost(Long id) throws PostNotExist, PermissionDeniedException {
-        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserBlog userLogged = userBlogRepository.findByUsername(username).get();
+        UserBlog userLogged = userBlogService.userLogged();
         Post post = checkPostExist(id);
-        System.out.println(post.getUserBlog().getId());
-        if (post.getUserBlog().getId() == userLogged.getId()){
-            postRepository.deleteById(userLogged.getId());
-        }else{
+        if (post.getUserBlog().getId() == userLogged.getId()) {
+            postRepository.deleteById(post.getId());
+        } else {
             throw new PermissionDeniedException("You don't have permission to delete this post!");
         }
     }
@@ -47,23 +48,29 @@ public class PostService {
         return checkPostExist(id);
     }
 
-    public Post updatePost(Long id, Post post, UserDetails userDetails) throws PostNotExist {
+    public Post updatePost(Long id, Post post) throws PostNotExist, PermissionDeniedException {
+        UserBlog userLogged = userBlogService.userLogged();
         Post postToBeUpdated = checkPostExist(id);
 
-        postToBeUpdated.setDescription(post.getDescription());
-        postToBeUpdated.setImage(post.getImage());
-        postToBeUpdated.setLink(post.getLink());
+        if (userLogged.getId() == post.getUserBlog().getId()) {
 
-        return postRepository.save(postToBeUpdated);
+            postToBeUpdated.setDescription(post.getDescription());
+            postToBeUpdated.setLink(post.getLink());
+            postToBeUpdated.setUserBlog(userLogged);
+
+            return postRepository.save(postToBeUpdated);
+        }else{
+            throw new PermissionDeniedException("You don't have permission to update this post!");
+        }
     }
 
-    public Page<Post> findAllPosts(Pageable pageable){
-        return postRepository.findAll(pageable);
+    public List<Post> findAll() {
+        return postRepository.findAll();
     }
 
-    private Post checkPostExist(Long id) throws PostNotExist {
+    public Post checkPostExist(Long id) throws PostNotExist {
         return postRepository.findById(id)
-                .orElseThrow(()-> new PostNotExist("Cannot find post with id: "+ id +" /n" +
+                .orElseThrow(() -> new PostNotExist("Cannot find post with id: " + id + " /n" +
                         "Please insert another id and try again!"));
     }
 }

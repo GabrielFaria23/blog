@@ -1,14 +1,11 @@
 package com.framework.blog.service;
 
 import com.framework.blog.exception.AlbumNotExist;
+import com.framework.blog.exception.CommentNotExist;
+import com.framework.blog.exception.PermissionDeniedException;
 import com.framework.blog.exception.PhotoNotExist;
-import com.framework.blog.exception.PostNotExist;
-import com.framework.blog.model.Album;
-import com.framework.blog.model.Photo;
-import com.framework.blog.model.Post;
-import com.framework.blog.repository.AlbumRepository;
+import com.framework.blog.model.*;
 import com.framework.blog.repository.PhotoRepository;
-import com.framework.blog.repository.PostRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,51 +15,67 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 @Service
 public class PhotoService {
 
     private final PhotoRepository photoRepository;
-    private final PostRepository postRepository;
-    private final AlbumRepository albumRepository;
+    private final AlbumService albumService;
+    private final UserBlogService userBlogService;
 
-    public PhotoService(PhotoRepository photoRepository, PostRepository postRepository, AlbumRepository albumRepository) {
+    public PhotoService(PhotoRepository photoRepository, AlbumService albumService, UserBlogService userBlogService) {
         this.photoRepository = photoRepository;
-        this.postRepository = postRepository;
-        this.albumRepository = albumRepository;
+        this.albumService = albumService;
+        this.userBlogService = userBlogService;
     }
 
-    public Photo uploadPhoto(Long idAlbum, MultipartFile photo) throws IOException, PostNotExist {
-        String folder = "/assets/photo/";
-        Path path = Paths.get("D:", folder);
-        Path arquivoPath = path.resolve(photo.getOriginalFilename());
-        try{
-            Files.createDirectories(path);
-            photo.transferTo(arquivoPath.toFile());
-        }catch (IOException e){
-            throw new RuntimeException("Error to save file!");
+    public Photo uploadPhoto(Long idAlbum, MultipartFile photo) throws AlbumNotExist, PermissionDeniedException {
+        UserBlog userBlog = userBlogService.userLogged();
+        Album album = albumService.checkAlbumExist(idAlbum);
+        if (userBlog.getId() == album.getUserBlog().getId()){
+            String folder = "/photo/";
+            Path path = Paths.get("C:", folder);
+            Path arquivoPath = path.resolve(photo.getOriginalFilename());
+            try{
+                Files.createDirectories(path);
+                photo.transferTo(arquivoPath.toFile());
+                return photoRepository.save(new Photo(path.toString(), album));
+            }catch (IOException e){
+                throw new RuntimeException("Error to save file!");
+            }
+        }else{
+            throw new PermissionDeniedException("You don't have permission to add photo(s) in this album!");
         }
 
-        return photoRepository.save(new Photo(path.toString()+ arquivoPath, new Album()));
     }
 
-    public void deletePhoto(Long id) throws PhotoNotExist {
-        photoRepository.deleteById(id);
+    public void deletePhoto(Long id) throws PhotoNotExist, PermissionDeniedException {
+        UserBlog userBlog = userBlogService.userLogged();
+        Photo photo = checkPhotoExist(id);
+        if (userBlog.getId() == photo.getAlbum().getUserBlog().getId()){
+            photoRepository.deleteById(id);
+        }else{
+            throw new PermissionDeniedException("You don't have permission to delete this photo!");
+        }
+
     }
 
-    public Page<Photo> findAllPhotos(Pageable pageable){
-        return photoRepository.findAll(pageable);
+    public List<Photo> findAll(){
+        return photoRepository.findAll();
     }
 
-    private Post checkPostExist(Long id) throws PostNotExist {
-        return postRepository.findById(id)
-                .orElseThrow(()-> new PostNotExist("Cannot find post with id: "+ id +" /n" +
-                        "Please insert another id and try again!"));
+    public List<Photo> findByAlbum(Long idAlbum) {
+        return photoRepository.findByAlbum(idAlbum);
     }
 
-    private Album checkAlbumExist(Long id) throws AlbumNotExist {
-        return albumRepository.findById(id)
-                .orElseThrow(()-> new AlbumNotExist("Cannot find album with id: "+ id +" /n" +
+    public Photo findById(Long id) throws PhotoNotExist {
+        return checkPhotoExist(id);
+    }
+
+    private Photo checkPhotoExist(Long id) throws PhotoNotExist {
+        return photoRepository.findById(id)
+                .orElseThrow(()-> new PhotoNotExist("Cannot find photo with id: "+ id +" /n" +
                         "Please insert another id and try again!"));
     }
 }

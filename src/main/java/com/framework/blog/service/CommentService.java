@@ -5,34 +5,31 @@ import com.framework.blog.exception.PermissionDeniedException;
 import com.framework.blog.model.Comment;
 import com.framework.blog.model.UserBlog;
 import com.framework.blog.repository.CommentRepository;
-import com.framework.blog.repository.UserBlogRepository;
-import org.springframework.dao.PermissionDeniedDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
+import java.util.List;
 
 @Service
 public class CommentService {
 
     private final CommentRepository commentRepository;
-    private final UserBlogRepository userBlogRepository;
+    private final UserBlogService userBlogService;
 
-    public CommentService(CommentRepository commentRepository, UserBlogRepository userBlogRepository) {
+    public CommentService(CommentRepository commentRepository, UserBlogService userBlogService) {
         this.commentRepository = commentRepository;
-        this.userBlogRepository = userBlogRepository;
+        this.userBlogService = userBlogService;
     }
 
     public Comment createComment(Comment comment){
-        UserBlog userLogged = userLogged();
+        UserBlog userLogged = userBlogService.userLogged();
         comment.setUserBlog(userLogged);
         return commentRepository.save(comment);
     }
 
     public void deleteComment(Long id) throws CommentNotExist, PermissionDeniedException {
-        UserBlog userLogged = userLogged();
+        UserBlog userLogged = userBlogService.userLogged();
         Comment comment = checkCommentExist(id);
         if (comment.getUserBlog().getId() == userLogged.getId()){
             commentRepository.deleteById(checkCommentExist(id).getId());
@@ -45,16 +42,20 @@ public class CommentService {
         return checkCommentExist(id);
     }
 
-    public Comment updateComment(Long id, Comment comment) throws CommentNotExist {
+    public Comment updateComment(Long id, Comment comment) throws CommentNotExist, PermissionDeniedException {
+        UserBlog userBlog = userBlogService.userLogged();
         Comment commentToBeUpdated = checkCommentExist(id);
+        if (userBlog.getId() == commentToBeUpdated.getUserBlog().getId()){
+            commentToBeUpdated.setComment(comment.getComment());
 
-        commentToBeUpdated.setComment(comment.getComment());
-
-        return commentRepository.save(commentToBeUpdated);
+            return commentRepository.save(commentToBeUpdated);
+        }else{
+            throw new PermissionDeniedException("You don't have permission to update this comment!");
+        }
     }
 
-    public Page<Comment> findAllComments(Pageable pageable){
-        return commentRepository.findAll(pageable);
+    public List<Comment> findAll(){
+        return commentRepository.findAll();
     }
 
     private Comment checkCommentExist(Long id) throws CommentNotExist {
@@ -63,8 +64,4 @@ public class CommentService {
                         "Please insert another id and try again!"));
     }
 
-    private UserBlog userLogged() {
-        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userBlogRepository.findByUsername(username).get();
-    }
 }

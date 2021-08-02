@@ -1,16 +1,21 @@
 package com.framework.blog.model;
 
 import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "comment")
-public class Comment {
+public class Comment extends RepresentationModel<Comment> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

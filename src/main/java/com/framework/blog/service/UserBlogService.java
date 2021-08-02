@@ -6,8 +6,11 @@ import com.framework.blog.repository.UserBlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserBlogService{
@@ -35,20 +38,27 @@ public class UserBlogService{
         UserBlog userToBeUpdated = checkUserIdExist(id);
 
         userToBeUpdated.setName(userBlog.getName());
+        userToBeUpdated.setUsername(userBlog.getUsername());
         userToBeUpdated.setCpf(userBlog.getCpf());
-        userToBeUpdated.setPassword(userBlog.getPassword());
+        userToBeUpdated.setPassword(passwordEncoder.encode(userBlog.getPassword()));
+        userToBeUpdated.setUserBlogRole(userBlog.getUserBlogRole());
 
         return userBlogRepository.save(userToBeUpdated);
     }
 
-    public Page<UserBlog> findAllUsers(Pageable pageable){
-        return userBlogRepository.findAll(pageable);
+    public List<UserBlog> findAll(){
+        return userBlogRepository.findAll();
     }
 
     private UserBlog checkUserIdExist(Long id) throws UserBlogNotExist {
         return userBlogRepository.findById(id)
                 .orElseThrow(() -> new UserBlogNotExist("Cannot find user with id: "+ id +" /n" +
                         "Please insert another id and try again!"));
+    }
+
+    public UserBlog userLogged() {
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userBlogRepository.findByUsername(username).get();
     }
 
 }

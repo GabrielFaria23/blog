@@ -8,20 +8,18 @@ INSERT INTO user_blog (id, name, username, password, cpf, user_blog_role, locked
     (null, "Pietra", "pietra", "$2a$10$KdfgMa.8n5ky.p8vUb.bGesS52wv4OdoOvMK21fbP7HHJWSMlMXaW", "69778901007", "USER", false, true);
 
 
-INSERT INTO post (id, description, image, link, user_blog_id) VALUES
+INSERT INTO post (id, description, link, user_blog_id) VALUES
     (null, "Your AI pair programmer With GitHub Copilot, get suggestions for whole lines or entire functions right inside your editor.",
-    "git_copilot.png", "https://copilot.github.com/", 3);
+    "https://copilot.github.com/", 3);
 
 
-INSERT INTO post (id, description, image, link, user_blog_id) VALUES
+INSERT INTO post (id, description, link, user_blog_id) VALUES
     (null, "Nokia XR20: celular 'indestrutível' promete longevidade no Android",
-    "celular_nokia.jpg",
     "https://www.tecmundo.com.br/dispositivos-moveis/221902-xr20-novo-celular-nokia-promete-durabilidade-android.htm", 2);
 
 
-INSERT INTO post (id, description, image, link, user_blog_id) VALUES
+INSERT INTO post (id, description, link, user_blog_id) VALUES
     (null, "Robô bípede consegue percorrer 5 mil metros; veja o vídeo",
-    "robo_bipede.jpg",
     "https://www.tecmundo.com.br/ciencia/222153-robo-bipede-consegue-percorrer-5-mil-metros-veja-video.htm", 1);
 
 INSERT INTO comment (id, comment, user_blog_id, post_id) VALUES
