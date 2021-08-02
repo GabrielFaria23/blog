@@ -24,7 +24,7 @@ A requisição tem que ser do tipo POST e deve ser enviado no corpo da requisiç
 						    "password": "123",
 						    "cpf": "95542836011",
 						    "userBlogRole": "ADMIN"
-						}.
+						}
 						
 Depois de cadastrar o Usuário é possível realizar seguintes requisições:
 1. (GET) Recuperar usuário por ID: http://localhost:8080/v1/usersBlog/{id} 
@@ -38,7 +38,7 @@ Depois de cadastrar o Usuário é possível realizar seguintes requisições:
               "password": "321",
               "cpf": "95542836011",
               "userBlogRole": "USER"
-          }.
+          }
 
 
 Depois de criar o usuário o proximo passo é fazer o login para ter acesso a algumas funcionalidades restritas. Para fazer o login faça uma requisição post para a url: http://localhost:8080/v1/login
@@ -77,6 +77,7 @@ Qualquer usuário pode comentar em qualquer post enviando um POST na url: http:/
         "id": 2
     }
 }
+
 Obs: Usuario logado vai comentar no post 2
 
 Caso o criador do comentario queira deletar seu comentario basta enviar uma requisição DELETE para a url: http://localhost:8080/v1/comments/{idComment} .
@@ -113,6 +114,7 @@ Para inserir Fotos dentro do álbum o dono do mesmo deve  enviar uma requisiçã
 
 ### UserBlog
 1. Cadastrar usuário: (POST) http://localhost:8080/v1/usersBlog
+
 >exBody(JSON): {
     "name": "Felipe",
     "username": "felipe",
@@ -120,7 +122,9 @@ Para inserir Fotos dentro do álbum o dono do mesmo deve  enviar uma requisiçã
     "cpf": "95542836011",
     "userBlogRole": "ADMIN"
 }
+
 2. Atualizar usuário: (PUT) http://localhost:8080/v1/usersBlog/{id}
+
 >exBody(JSON): {
 >"id": 1,
     "name": "Felipe",
@@ -129,16 +133,19 @@ Para inserir Fotos dentro do álbum o dono do mesmo deve  enviar uma requisiçã
     "cpf": "95542836011",
     "userBlogRole": "ADMIN"
 }
+
 3. Buscar usuários : (GET) http://localhost:8080/v1/usersBlog
 4. Buscar usuário por id : (GET) http://localhost:8080/v1/usersBlog/{id}
 5. Deletar usuário por id : (DELETE) http://localhost:8080/v1/usersBlog/{id}
 
 ### Post
 1. Cadastrar post: (POST) http://localhost:8080/v1/posts
+
 >exBody(JSON): {
     "description": "Noticias x",
     "link": "www.google.com/..."
 }
+
 2. Atualizar post: (PUT) http://localhost:8080/v1/posts/{id}
 >exBody(JSON):{
     "id": 4,
@@ -148,6 +155,7 @@ Para inserir Fotos dentro do álbum o dono do mesmo deve  enviar uma requisiçã
     	"id": 1
     }
 }
+
 3. Buscar posts: (GET) http://localhost:8080/v1/posts
 4. Buscar post por id : (GET) http://localhost:8080/v1/posts/{id}
 5. Deletar post por id : (DELETE) http://localhost:8080/v1/posts/{id}
@@ -161,10 +169,12 @@ Para inserir Fotos dentro do álbum o dono do mesmo deve  enviar uma requisiçã
     }
 }
 2. Atualizar Comentário: (PUT) http://localhost:8080/v1/comments/{id}
+
 >exBody(JSON):{
 >"id": 1,
     "comment": "comment by felipe!"
 }
+
 3. Buscar Comentários: (GET) http://localhost:8080/v1/comments
 4. Buscar Comentário por id : (GET) http://localhost:8080/v1/comments/{id}
 5. Deletar Comentário por id : (DELETE) http://localhost:8080/v1/comments/{id}
