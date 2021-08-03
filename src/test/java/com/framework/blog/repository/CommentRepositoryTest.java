@@ -1,9 +1,6 @@
 package com.framework.blog.repository;
 
-import com.framework.blog.exception.UserBlogNotExist;
 import com.framework.blog.model.Comment;
-import com.framework.blog.model.Photo;
-import com.framework.blog.model.Post;
 import com.framework.blog.util.CommentCreator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

@@ -1,7 +1,6 @@
 package com.framework.blog.repository;
 
 import com.framework.blog.model.Image;
-import com.framework.blog.model.Photo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

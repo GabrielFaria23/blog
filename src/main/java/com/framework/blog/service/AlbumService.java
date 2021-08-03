@@ -5,10 +5,6 @@ import com.framework.blog.exception.PermissionDeniedException;
 import com.framework.blog.model.Album;
 import com.framework.blog.model.UserBlog;
 import com.framework.blog.repository.AlbumRepository;
-import com.framework.blog.repository.UserBlogRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,13 +1,12 @@
 package com.framework.blog.service;
 
 import com.framework.blog.exception.AlbumNotExist;
-import com.framework.blog.exception.CommentNotExist;
 import com.framework.blog.exception.PermissionDeniedException;
 import com.framework.blog.exception.PhotoNotExist;
-import com.framework.blog.model.*;
+import com.framework.blog.model.Album;
+import com.framework.blog.model.Photo;
+import com.framework.blog.model.UserBlog;
 import com.framework.blog.repository.PhotoRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

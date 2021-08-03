@@ -1,13 +1,10 @@
 package com.framework.blog.controller;
 
-import com.framework.blog.exception.PermissionDeniedException;
 import com.framework.blog.exception.CommentNotExist;
-import com.framework.blog.exception.UserBlogNotExist;
+import com.framework.blog.exception.PermissionDeniedException;
 import com.framework.blog.model.Comment;
-import com.framework.blog.model.UserBlog;
 import com.framework.blog.service.CommentService;
 import com.framework.blog.util.CommentCreator;
-import com.framework.blog.util.UserBlogCreator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

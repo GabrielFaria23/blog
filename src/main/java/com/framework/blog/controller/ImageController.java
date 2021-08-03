@@ -2,15 +2,11 @@ package com.framework.blog.controller;
 
 import com.framework.blog.exception.ImageNotExist;
 import com.framework.blog.exception.PermissionDeniedException;
-import com.framework.blog.exception.PhotoNotExist;
 import com.framework.blog.exception.PostNotExist;
 import com.framework.blog.model.Image;
-import com.framework.blog.model.Photo;
 import com.framework.blog.service.ImageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

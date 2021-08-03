@@ -1,21 +1,16 @@
 package com.framework.blog.controller;
 
-import com.framework.blog.exception.PostNotExist;
 import com.framework.blog.exception.UserBlogNotExist;
-import com.framework.blog.model.Post;
 import com.framework.blog.model.UserBlog;
 import com.framework.blog.service.UserBlogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;

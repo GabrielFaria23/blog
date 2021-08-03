@@ -5,8 +5,6 @@ import com.framework.blog.exception.PermissionDeniedException;
 import com.framework.blog.model.Comment;
 import com.framework.blog.model.UserBlog;
 import com.framework.blog.repository.CommentRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -5,17 +5,9 @@ import com.framework.blog.exception.PostNotExist;
 import com.framework.blog.model.Post;
 import com.framework.blog.model.UserBlog;
 import com.framework.blog.repository.PostRepository;
-import com.framework.blog.repository.UserBlogRepository;
-import org.springframework.dao.PermissionDeniedDataAccessException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PostService {

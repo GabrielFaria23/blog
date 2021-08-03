@@ -1,7 +1,6 @@
 package com.framework.blog.repository;
 
 import com.framework.blog.model.Album;
-import com.framework.blog.model.Photo;
 import com.framework.blog.util.AlbumCreator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
